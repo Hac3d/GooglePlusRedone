@@ -1,9 +1,13 @@
 // ==UserScript==
 // @name         GoogleBar (SCRIPT)
-// @namespace    https://discord.gg/DNeMsgXaz6
-// @version      0.6
+// @icon         https://github.com/Hac3d/GooglePlusRedone/blob/main/images/plus.png?raw=true
+// @namespace    https://github.com/Hac3d/
+// @version      0.7.4
 // @description  Brings back the old black top bar from 2011 - 2014 and adds Google+ services.
 // @author       Hac3d
+// @match        https://www.youtube.com/*
+// @match        https://www.youtube.com/?*
+// @match        https://www.youtube.com/
 // @match        https://www.google.com/
 // @match        https://www.google.com/?*
 // @match        https://www.google.com/search*
@@ -18,51 +22,58 @@
 // @match        https://maps.google.com/
 // @match        https://maps.google.com/*
 // @match        https://googleplus.vercel.app/index2.html
-// @run-at       document-body
-// @grant        none
+// @run-at       document-start
 // ==/UserScript==
+
+window.addEventListener("DOMContentLoaded", () => {
+        // DOM ready! Images, frames, and other subresources are still downloading.
+
+
+console.log("I am running!");
+
+var topempty = document.createElement("div");
+topempty.innerHTML = '<div id="gbspace"></div>';
+document.body.insertBefore(topempty, document.body.firstChild);
 
 var topBar
 
-var topempty = document.createElement("div");
-topempty.innerHTML = '<div id="gb"></div>';
-document.body.insertBefore(topempty, document.body.firstChild);
-
 function detectURL() {
     if (window.location.hostname === 'googleplus.vercel.app') {
-        return 0
+        return 0;
+    } else if (window.location.hostname === 'www.youtube.com') {
+        return 3;
     } else if (window.location.hostname === 'mail.google.com') {
-        return 7
+        return 7;
     } else if (window.location.href.includes('tbm=nws')) {
-        return 6
+        return 6;
     } else if (window.location.href.includes('imghp') || window.location.href.includes('tbm=isch')) {
-        return 2
+        return 2;
     } else if (window.location.href.includes('videohp')) {
-        return 3
+        return 3;
     } else if (window.location.href.includes('maps')) {
-        return 4
+        return 4;
     } else {
-        return 1
+        return 1;
     }
 }
 
 function toggleMore() {
     event.preventDefault()
     if (!topBar.querySelector('div.tbLeftItems li.tbDropdown a.tbDropdown').classList.contains('tbOpen')) {
-        topBar.querySelector('div.tbLeftItems li.tbDropdown a.tbDropdown').classList.add('tbOpen')
-        topBar.querySelector('div.tbLeftItems li.tbDropdown div.tbMoreMenu').classList.add('tbOpen')
+        topBar.querySelector('div.tbLeftItems li.tbDropdown a.tbDropdown').classList.add('tbOpen');
+        topBar.querySelector('div.tbLeftItems li.tbDropdown div.tbMoreMenu').classList.add('tbOpen');
     } else if (topBar.querySelector('div.tbLeftItems li.tbDropdown a.tbDropdown').classList.contains('tbOpen')) {
-        topBar.querySelector('div.tbLeftItems li.tbDropdown a.tbDropdown').classList.remove('tbOpen')
-        topBar.querySelector('div.tbLeftItems li.tbDropdown div.tbMoreMenu').classList.remove('tbOpen')
+        topBar.querySelector('div.tbLeftItems li.tbDropdown a.tbDropdown').classList.remove('tbOpen');
+        topBar.querySelector('div.tbLeftItems li.tbDropdown div.tbMoreMenu').classList.remove('tbOpen');
     }
 }
 
 function toggleAccount() {
     event.preventDefault()
     if (!topBar.querySelector('div.tbRightItems li.tbDropdown div.tbAccountMenu').classList.contains('tbOpen')) {
-        topBar.querySelector('div.tbRightItems li.tbDropdown div.tbAccountMenu').classList.add('tbOpen')
+        topBar.querySelector('div.tbRightItems li.tbDropdown div.tbAccountMenu').classList.add('tbOpen');
     } else if (topBar.querySelector('div.tbRightItems li.tbDropdown div.tbAccountMenu').classList.contains('tbOpen')) {
-        topBar.querySelector('div.tbRightItems li.tbDropdown div.tbAccountMenu').classList.remove('tbOpen')
+        topBar.querySelector('div.tbRightItems li.tbDropdown div.tbAccountMenu').classList.remove('tbOpen');
     }
 }
 
@@ -80,11 +91,11 @@ function createtopBar() {
     topBar = document.createElement("div");
     topBar.classList.add('topBar')
     topBar.innerHTML =
-    `<div class="tbLeftItems">
-        <a href="https://googleplus.vercel.app/index2.html">+Joe</a>
+    `<div style="z-index: -1 !important; position: relative !important;" class="tbLeftItems">
+        <a class="guser" href="https://googleplus.vercel.app/index2.html">+Joe</a>
         <a href="https://www.google.com">Search</a>
         <a href="https://www.google.com/imghp">Images</a>
-        <a href="http://www.google.com/videohp">Videos</a>
+        <a href="https://www.youtube.com/">YouTube</a>
         <a href="https://maps.google.com">Maps</a>
         <a href="https://news.google.com">News</a>
         <a href="https://store.google.com">Shopping</a>
@@ -104,7 +115,7 @@ function createtopBar() {
                 <a href="https://www.google.com/finance/">Finance</a>
                 <a href="https://photos.google.com">Photos</a>
                 <a href="https://play.google.com">Play</a>
-                <a href="https://www.youtube.com">YouTube</a>
+                <a href="http://www.google.com/videohp">Videos</a>
                 <a href="https://drive.google.com">Drive</a>
                 <div class="tbSeperator"></div>
                 <a href="https://about.google/intl/en/products/">Even more »</a>
@@ -151,28 +162,18 @@ function createtopBar() {
         <a class="tbSettings" href="https://www.google.com/preferences"></>
     </div>`
     /* Detect URL and make sure the correct item is selected */
-    topBar.querySelector('div.tbLeftItems').children[detectURL()].classList.add('tbSelected')
+    topBar.querySelector('div.tbLeftItems').children[detectURL()].classList.add('tbSelected');
 
     /* Listen for when the more button is clicked and call the toggle function */
     topBar.querySelector('div.tbLeftItems li.tbDropdown a.tbDropdown').addEventListener("click", toggleMore);
-
-    /* Call the function to detect if the user is signed in and display their email address */
-    setTimeout(function() {
-        if (getEmail()) {
-            const accountButton = topBar.querySelector('div.tbRightItems li.tbDropdown a')
-            const email = getEmail()
-            accountButton.textContent = email.nextSibling.textContent
-            accountButton.classList.add('tbDropdown')
-
-            topBar.querySelector('div.tbRightItems li.tbDropdown div.tbAccountMenu div.row img#tbProfilePic').src = document.querySelectorAll('img.gb_n.gbii')[0].src.replace('=s32', '=s256')
-            topBar.querySelector('div.tbRightItems li.tbDropdown div.tbAccountMenu div.row div.column span#tbName').textContent = email.textContent
-            topBar.querySelector('div.tbRightItems li.tbDropdown div.tbAccountMenu div.row div.column span#tbEmail').textContent = email.nextSibling.textContent
-
-            /* Listen for when the account button is clicked and call the toggle function */
-            accountButton.addEventListener("click", toggleAccount);
-        }
-    }, 2000);
     document.body.insertBefore(topBar, document.body.firstChild);
 }
 
-createtopBar()
+createtopBar();
+console.log("I am done running!");
+
+var element = document.querySelector('div[style="display:block!important;opacity:1!important;visibility:visible!important;left:unset!important;top:unset!important;margin:unset!important;background:#333!important;font-size:12px!important;position:fixed!important;bottom:0!important;right:0!important;z-index:2147483647!important;padding:10px 15px!important;color:#fff!important;text-indent:unset!important;font-family:Arial!important;letter-spacing:unset!important;height:unset!important;max-height:unset!important;min-height:unset!important;width:unset!important;max-width:unset!important;min-width:unset!important;clip:unset!important;filter:unset!important;transform:unset!important;overflow:unset!important;border:unset!important;clip-path:unset!important"]');
+if (element) {
+    element.remove();
+}
+});

@@ -1,17 +1,18 @@
 /* ==UserStyle==
 @name           GoogleBar (Style)
-@namespace      https://discord.gg/t9NEEN3PnM
-@version        0.6
-@description    Brings back the old black top bar from 2011 - 2014 and adds Google+ services.
+@namespace      https://github.com/hac3d
+@version        0.7.4
+@description    A rework of the GoogleBar seen at the top of Google in 2012/2013 also adds Google+ services (somewhat).
 @preprocessor   stylus
 @var            checkbox modern "Modern Style" 0
 @var            checkbox filters "Old Filters Compatibility" 0
 @var            checkbox oldtheme "Work In Progress 2013 Theme" 0
+@var            text     username "Username" Joe
 @author         Hac3d
 ==/UserStyle== */
 
 /* Style custom elements (all)*/
-@-moz-document domain("google.com"), domain("googleplus.vercel.app") {
+@-moz-document domain("google.com"), domain("googleplus.vercel.app"), domain("youtube.com") {
     #result-stats {
         display: ;
         text-align: left;
@@ -288,15 +289,15 @@
         }
         .Tg7LZd, .rCGXm {
             height: 32px;
-            background: linear-gradient(0deg, #4787ed 0%, #4d90fe 100%)
-            border: 1px solid #3079ed
-            border-radius: 0px
+            background: linear-gradient(0deg, #4787ed 0%, #4d90fe 100%);
+            border: 1px solid #3079ed;
+            border-radius: 0px;
             width: 75px;
             margin-top: -1px;
             margin-right: -1px
         }
         .Tg7LZd svg, .rCGXm svg {
-            filter: saturate(0%) brightness(200%)
+            filter: saturate(0%) brightness(200%);
             margin-top: 2px;
             height: 20px;
             width: 20px;
@@ -310,7 +311,7 @@
             padding: 4px 28px 0 30px;
         }
         .Lj9fsd.DU1Mzb {
-            padding: 0px
+            padding: 0px;
             box-shadow: none;
         }
         .DU1Mzb svg {
@@ -328,7 +329,7 @@
             display:none;
         }
         .hdtb-mitem, .t2vtad {
-            font-family: arial, sans-serif
+            font-family: arial, sans-serif;
             text-align: center;
         }
         .minidiv .gLFyf {
@@ -429,12 +430,12 @@
             line-height: 21px !important;
         }
         .gNO89b:hover, #gbqfbb:hover, .RNmpXc:hover, .gbqfba.gbqfba-hvr:hover {
-            filter: brightness(101%)
+            filter: brightness(101%);
             border: 1px solid #aeaeae !important;
             box-shadow: 0 1px 1px rgba(0,0,0,0.1) !important;
         }
         .gNO89b:active, #gbqfbb:active, .RNmpXc:active, .gbqfba.gbqfba-hvr:active {
-            filter: brightness(99%)
+            filter: brightness(99%);
             background-color: #f4f4f4 !important;
             border: 1px solid #3079ed !important;
             box-shadow: 0 1px 1px rgba(0,0,0,0.1) !important;
@@ -662,12 +663,21 @@
     }
 }
 
+@-moz-document url-prefix("https://googleplus.vercel.app/") {
+
+    /* make space for the gbar */
+    #gbspace{
+    font:13px/27px Arial,sans-serif;
+    height: 30px !important;
+    }
+    
+}
 @-moz-document url-prefix("https://www.google.com/maps"), url-prefix("https://maps.google.com/"), url-prefix("https://mail.google.com/"), url-prefix("https://myaccount.google.com/") {
     
     /* make space for the gbar */
-    #gb{
+    #gbspace{
     font:13px/27px Arial,sans-serif;
-    height: 30px;
+    height: 30px !important;
     }
     
     /* Gmail Logo */
@@ -685,8 +695,6 @@
     /* Active Button */
     .Yb, .dIH7rb, .bax, .zo, .Yd, .bfF {
         display: none !important;
-        background-color: red;
-        background: red;
     }
     
     
@@ -701,5 +709,28 @@
         position: relative;
         right: 1500% !important;
         color: grey !important;
+    }
+}
+@-moz-document url-prefix("https://www.youtube.com/") {
+    
+    #gbz {
+        display: none;
+    }
+    
+    #masthead-positioner-container, #yt-masthead, #masthead-positioner-height-offset, #masthead-positioner {
+        z-index: 998 !important;
+        margin-top: 15px !important;
+    }
+
+    /* make space for the gbar */
+    #gbspace {
+        
+        z-index: 999 !important;
+        position: relative !important;
+        font: 13px/27px Arial,sans-serif !important;
+    }
+    
+    div[style="display:block!important;opacity:1!important;visibility:visible!important;left:unset!important;top:unset!important;margin:unset!important;background:#333!important;font-size:12px!important;position:fixed!important;bottom:0!important;right:0!important;z-index:2147483647!important;padding:10px 15px!important;color:#fff!important;text-indent:unset!important;font-family:Arial!important;letter-spacing:unset!important;height:unset!important;max-height:unset!important;min-height:unset!important;width:unset!important;max-width:unset!important;min-width:unset!important;clip:unset!important;filter:unset!important;transform:unset!important;overflow:unset!important;border:unset!important;clip-path:unset!important"] {
+        display: none !important;
     }
 }
