@@ -2,6 +2,8 @@
  ![alt text][textlogo]
 ___
 
+> This was forked from [here.](https://github.com/CallyHam/Google-Top-Bar)
+
 > This is still a very early version, expect bugs!
 
 > Click [here](https://github.com/) to view the current Google services that we currently support.
