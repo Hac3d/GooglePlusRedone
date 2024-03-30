@@ -6,7 +6,7 @@ ___
 
 > This is still a very early version, expect bugs!
 
-> Click [here](https://github.com/) to view the current Google services that we currently support.
+> Click [here](https://github.com/Hac3d/GooglePlusRedone/wiki/Google-services-that-we-currently-support.) to view the current Google services that we currently support.
 
 > New to this? Go [here](https://github.com/) to learn how to install this.
 
